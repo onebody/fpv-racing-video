@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#0a0a0f">
+    <title>FPV竞速视频大全</title>
+    <style>
+        /* ===== Reset & Base ===== */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { font-size: 16px; scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+            background: #0a0a0f; color: #eee; line-height: 1.6;
+            min-height: 100vh; min-height: -webkit-fill-available;
+            overflow-x: hidden;
+        }
+        a { color: inherit; text-decoration: none; }
+        img, iframe { max-width: 100%; }
+        button { font-family: inherit; }
+
+        /* ===== CSS Variables ===== */
+        :root {
+            --red: #ff1744; --red-dark: #c4001d; --orange: #ff5722; --amber: #ff9100;
+            --bg: #0a0a0f; --bg2: #12121c; --bg3: #1a1a28; --bg4: #24243a;
+            --text: #eee; --text2: #999; --text3: #666;
+            --border: #2a2a3a;
+            --r: 12px; --r-sm: 8px; --r-xs: 6px;
+            --safe-top: env(safe-area-inset-top, 0px);
+            --safe-bottom: env(safe-area-inset-bottom, 0px);
+        }
+
+        /* ===== Header ===== */
+        .header {
+            background: linear-gradient(135deg, var(--red), var(--orange), var(--amber));
+            padding: 2rem 1.25rem 1.5rem;
+            text-align: center;
+            padding-top: calc(2rem + var(--safe-top));
+        }
+        .header h1 { font-size: clamp(1.5rem, 6vw, 2.8rem); font-weight: 800; text-shadow: 0 2px 8px rgba(0,0,0,.3); }
+        .header p { font-size: clamp(0.82rem, 2.5vw, 1.05rem); opacity: .92; margin-top: .3rem; }
+
+        /* ===== Stats ===== */
+        .stats {
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            background: var(--bg2); border-bottom: 1px solid var(--border);
+        }
+        .stats > div { text-align: center; padding: 1.2rem .5rem; }
+        .stats > div + div { border-left: 1px solid var(--border); }
+        .stats .val { font-size: clamp(1.5rem, 5vw, 2.2rem); font-weight: 800; color: var(--red); }
+        .stats .lbl { font-size: .75rem; color: var(--text3); letter-spacing: 1px; margin-top: .15rem; }
+
+        /* ===== Filters (horizontal scroll on mobile) ===== */
+        .filters {
+            position: sticky; top: 0; z-index: 200;
+            background: var(--bg); border-bottom: 1px solid var(--border);
+            padding: .75rem; padding-top: calc(.75rem + var(--safe-top));
+            display: flex; gap: .5rem; overflow-x: auto;
+            -webkit-overflow-scrolling: touch; scrollbar-width: none;
+        }
+        .filters::-webkit-scrollbar { display: none; }
+        .fbtn {
+            flex-shrink: 0; padding: .5rem 1rem; border: 1px solid var(--border);
+            background: var(--bg2); color: var(--text); border-radius: 2rem;
+            font-size: .85rem; cursor: pointer; transition: .2s;
+            -webkit-tap-highlight-color: transparent; white-space: nowrap;
+        }
+        .fbtn:active, .fbtn.on { background: var(--red); border-color: var(--red); color: #fff; }
+
+        /* ===== Content ===== */
+        .wrap {
+            max-width: 1400px; margin: 0 auto;
+            padding: 1rem; padding-bottom: calc(1rem + var(--safe-bottom));
+        }
+
+        /* ===== Note ===== */
+        .note {
+            background: var(--bg3); border-left: 4px solid var(--red);
+            padding: .875rem 1rem; border-radius: 0 var(--r-sm) var(--r-sm) 0;
+            margin-bottom: 1.5rem; font-size: .85rem; color: var(--text2);
+        }
+        .note b { color: var(--red); display: block; margin-bottom: .2rem; }
+
+        /* ===== Section ===== */
+        .sec { margin-bottom: 2rem; }
+        .sec-head {
+            display: flex; align-items: center; gap: .75rem; flex-wrap: wrap;
+            padding: 1rem 1.25rem; background: var(--bg2);
+            border-radius: var(--r); border-left: 4px solid var(--red);
+            margin-bottom: 1rem;
+        }
+        .sec-avatar {
+            width: 48px; height: 48px; border-radius: 50%;
+            background: linear-gradient(135deg, var(--red), var(--orange));
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.2rem; font-weight: 700; flex-shrink: 0;
+        }
+        .sec-meta { flex: 1; min-width: 0; }
+        .sec-meta h2 { font-size: clamp(1rem, 3vw, 1.35rem); }
+        .sec-meta p { font-size: .8rem; color: var(--text3); }
+        .sec-link {
+            flex-shrink: 0; padding: .45rem .9rem; background: var(--red);
+            color: #fff; border-radius: var(--r-xs); font-size: .8rem;
+            transition: .2s; white-space: nowrap;
+        }
+        .sec-link:active { background: var(--red-dark); }
+
+        /* ===== Grid ===== */
+        .grid {
+            display: grid; gap: 1rem;
+            grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
+        }
+
+        /* ===== Card ===== */
+        .card {
+            background: var(--bg2); border-radius: var(--r);
+            border: 1px solid var(--border); overflow: hidden;
+            transition: border-color .2s;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .card-top { padding: 1rem 1.15rem .75rem; border-bottom: 1px solid var(--border); }
+        .card-who {
+            display: inline-flex; align-items: center; gap: .35rem;
+            background: var(--red); padding: .2rem .65rem; border-radius: 2rem;
+            font-size: .78rem; font-weight: 600; margin-bottom: .45rem;
+        }
+        .plat { font-size: .6rem; padding: .1rem .35rem; border-radius: 3px; margin-left: .3rem; vertical-align: middle; }
+        .plat-b { background: #00a1d6; }
+        .plat-d { background: #222; border: 1px solid #555; }
+        .plat-y { background: #f00; }
+        .card-title { font-size: clamp(.92rem, 2.5vw, 1.05rem); font-weight: 600; line-height: 1.5; }
+
+        .card-body { padding: .875rem 1.15rem; }
+        .card-desc { font-size: .82rem; color: var(--text2); line-height: 1.55; margin-bottom: .65rem; }
+        .card-tags { display: flex; flex-wrap: wrap; gap: .35rem; margin-bottom: .65rem; }
+        .t { background: var(--bg4); padding: .15rem .5rem; border-radius: 1rem; font-size: .72rem; color: var(--amber); }
+
+        .card-btns { display: flex; gap: .5rem; }
+        .cb {
+            flex: 1; padding: .6rem .4rem; border: none; border-radius: var(--r-xs);
+            font-size: .82rem; font-weight: 500; text-align: center; cursor: pointer;
+            display: inline-flex; align-items: center; justify-content: center; gap: .25rem;
+            transition: .15s; -webkit-tap-highlight-color: transparent;
+        }
+        .cb-p { background: var(--red); color: #fff; }
+        .cb-p:active { background: var(--red-dark); }
+        .cb-s { background: var(--bg4); color: #fff; }
+        .cb-s:active { background: #333350; }
+
+        /* ===== Player ===== */
+        .pwrap { display: none; margin-top: .65rem; background: #000; border-radius: var(--r-xs); overflow: hidden; }
+        .pwrap.on { display: block; }
+        .pwrap iframe { width: 100%; aspect-ratio: 16/9; border: none; display: block; }
+        .pclose {
+            width: 100%; padding: .4rem; background: #1a1a1a; color: #888;
+            border: none; font-size: .78rem; cursor: pointer; text-align: center;
+        }
+
+        /* ===== More ===== */
+        .more {
+            text-align: center; padding: 1.25rem; background: var(--bg2);
+            border-radius: var(--r); margin-top: 1rem; border: 2px dashed var(--border);
+        }
+        .more h3 { color: var(--red); font-size: .95rem; margin-bottom: .4rem; }
+        .more p { color: var(--text3); font-size: .82rem; margin-bottom: .65rem; }
+
+        /* ===== Footer ===== */
+        .ft { text-align: center; padding: 1.5rem 1rem; color: var(--text3); font-size: .75rem; border-top: 1px solid var(--border); }
+
+        /* ===== Desktop hover effects ===== */
+        @media (hover: hover) {
+            .card:hover { border-color: var(--red); }
+            .cb-p:hover { background: var(--red-dark); }
+            .cb-s:hover { background: #333350; }
+            .sec-link:hover { background: var(--red-dark); }
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 480px) {
+            .header { padding: 1.5rem 1rem 1.25rem; }
+            .wrap { padding: .75rem; }
+            .grid { gap: .75rem; }
+            .sec-head { padding: .75rem 1rem; gap: .6rem; }
+            .sec-avatar { width: 40px; height: 40px; font-size: 1rem; }
+        }
+        @media (min-width: 769px) {
+            .wrap { padding: 2rem; }
+        }
+        @media (min-width: 1024px) {
+            .grid { grid-template-columns: repeat(3, 1fr); }
+        }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <h1>🏁 FPV竞速视频大全</h1>
+    <p>阿光 · 破风 · MCK · 国内外竞速飞手合集 | 2024-2026</p>
+</header>
+
+<div class="stats">
+    <div><div class="val" id="cnt">0</div><div class="lbl">精选视频</div></div>
+    <div><div class="val">8+</div><div class="lbl">竞速飞手</div></div>
+    <div><div class="val">3</div><div class="lbl">平台来源</div></div>
+</div>
+
+<nav class="filters" id="filters">
+    <button class="fbtn on" data-f="all">全部</button>
+    <button class="fbtn" data-f="aguang">阿光</button>
+    <button class="fbtn" data-f="pofeng">破风</button>
+    <button class="fbtn" data-f="mck">MCK</button>
+    <button class="fbtn" data-f="other">其他博主</button>
+    <button class="fbtn" data-f="bilibili">B站</button>
+    <button class="fbtn" data-f="douyin">抖音</button>
+</nav>
+
+<main class="wrap">
+    <div class="note">
+        <b>📱 手机 & 💻 PC 通用</b>
+        B站视频点"播放"直接看；抖音/YouTube点"跳转"在APP打开。每个博主底部有主页链接，可查看全部视频。
+    </div>
+    <div id="app"></div>
+</main>
+
+<footer class="ft">FPV Racing Video Library · 仅供学习交流 · 视频版权归原创作者所有</footer>
+
+<script>
+const V=[
+// ====== 阿光 ======
+{id:'a1',who:'阿光的飞行计划',k:'aguang',p:'bilibili',t:'阿光的FPV飞行教学4-双连门组合训练',bv:'BV1HT96BEE9h',u:'https://www.bilibili.com/video/BV1HT96BEE9h/',d:'阿光竞速教学系列第四集，详细讲解双连门组合的技术要点和训练方法',tg:['教学','双连门','组合训练'],dt:'2026-04'},
+{id:'a2',who:'阿光的飞行计划',k:'aguang',p:'bilibili',t:'穿越机竞速 带训对抗练习DVR记录',bv:'BV1qUoCBZEkS',u:'https://www.bilibili.com/video/BV1qUoCBZEkS/',d:'竞速带训对抗练习DVR，展示实际竞速训练中的对抗技巧和策略',tg:['对抗','DVR','走线'],dt:'2026-04'},
+{id:'a3',who:'阿光的飞行计划',k:'aguang',p:'bilibili',t:'2024年中国无人机国家队选拔赛-赛前准备',bv:'BV1zM4m1k77W',u:'https://www.bilibili.com/video/BV1zM4m1k77W/',d:'国家队选拔赛赛前准备分享，赛道分析和策略制定',tg:['国家队','选拔赛'],dt:'2024'},
+{id:'a4',who:'阿光的飞行计划',k:'aguang',p:'bilibili',t:'"我要上全运"浙江省选拔赛DVR',bv:'BV1UD1uYfEtq',u:'https://www.bilibili.com/video/BV1UD1uYfEtq/',d:'浙江省全运会航空模型项目集训人员选拔赛DVR记录',tg:['全运会','浙江'],dt:'2024-10'},
+{id:'a5',who:'阿光的飞行计划',k:'aguang',p:'douyin',t:'穿越机竞速 五一带训赛道 走线记录DVR',u:'https://www.douyin.com/video/7500941677465980199',d:'五一带训赛道走线记录，最佳飞行线路和控高技巧',tg:['走线','赛道','控高'],dt:'2025-05'},
+{id:'a6',who:'阿光的飞行计划',k:'aguang',p:'douyin',t:'2025年中国无人机竞速联赛-廊坊站 DVR',u:'https://www.douyin.com/video/7516356154533842235',d:'中国无人机竞速联赛廊坊站DVR，国内顶级竞速赛事',tg:['联赛','廊坊','DVR'],dt:'2025'},
+{id:'a7',who:'阿光的飞行计划',k:'aguang',p:'douyin',t:'穿越机竞速带训赛道DVR-走线记录',u:'https://www.douyin.com/search/阿光飞行计划分享',d:'带训赛道走线记录，与山城小飞侠等飞手的互动训练',tg:['带训','走线'],dt:'2026-04'},
+// ====== 破风 ======
+{id:'p1',who:'破风FPV',k:'pofeng',p:'douyin',t:'破风教你学竞速——过S弯',u:'https://www.douyin.com/video/7572144222250208566',d:'S弯核心在于线路优化与动作衔接，通过合理规划路径、控制油门、精准转向实现高效过弯',tg:['S弯','线路','过弯'],dt:'2025-11'},
+{id:'p2',who:'破风FPV',k:'pofeng',p:'douyin',t:'破风教你学竞速——过重力门',u:'https://www.douyin.com/video/7609999878340797642',d:'重力门是竞速中最难的门型之一，详细讲解穿越技巧和训练方法',tg:['重力门','高难度'],dt:'2026-02'},
+{id:'p3',who:'破风FPV',k:'pofeng',p:'douyin',t:'破风教你学竞速——如何调出竞速Rate',u:'https://www.douyin.com/search/破风fpv飞行教学',d:'调整竞速飞行的Rate参数，找到适合自己的手感，提升操控精准度',tg:['Rate','调参','手感'],dt:'2026'},
+{id:'p4',who:'破风FPV',k:'pofeng',p:'douyin',t:'2024年FAI无人机竞速锦标赛赛道一镜到底',u:'https://www.douyin.com/search/破风fpv穿越机',d:'FAI世锦赛赛道完整一镜到底，国际顶级赛事赛道全貌',tg:['FAI','世锦赛','赛道'],dt:'2024'},
+{id:'p5',who:'破风FPV',k:'pofeng',p:'douyin',t:'破风教你学竞速——过蛇形门',u:'https://www.douyin.com/search/破风fpv飞行教学',d:'蛇形门考验飞手连续转向能力的重要关卡',tg:['蛇形门','转向'],dt:'2026'},
+{id:'p6',who:'破风FPV',k:'pofeng',p:'douyin',t:'Racing竞速分享——两个门也能飞出花',u:'https://www.douyin.com/search/破风fpv穿越机',d:'简单双门组合，通过不同飞行线路和技巧也能玩出花样',tg:['双门','线路变化'],dt:'2025'},
+{id:'p7',who:'破风FPV',k:'pofeng',p:'douyin',t:'破风教你学竞速——三联门飞行经验分享',u:'https://www.douyin.com/search/穿越机竞速赛道门',d:'三联门初学到进阶，三步练习方法，打杆细节全讲解',tg:['三联门','打杆'],dt:'2025'},
+{id:'p8',who:'破风小课堂',k:'pofeng',p:'bilibili',t:'破风小课堂-每天一个穿越机小知识',u:'https://space.bilibili.com/3493077213776857',d:'T-MOTOR旗下官方账号，每天讲解穿越机竞速小知识',tg:['小课堂','官方'],dt:'持续更新'},
+// ====== MCK ======
+{id:'m1',who:'MCK FPV',k:'mck',p:'youtube',t:'MCK FPV - World Champion Training',u:'https://www.youtube.com/results?search_query=MCK+FPV+racing',d:'MCK官方YouTube频道，世界冠军训练视频和比赛记录。2023 FAI世锦赛冠军',tg:['世界冠军','训练','官方'],dt:'持续更新'},
+{id:'m2',who:'MCK(转载)',k:'mck',p:'douyin',t:'世界冠军MCK最新训练视频',u:'https://www.douyin.com/video/7462296370158783763',d:'转载MCK最新训练视频，学习世界冠军的训练方法和赛道策略',tg:['训练','冠军'],dt:'2025-01'},
+{id:'m3',who:'比翼飞行',k:'mck',p:'douyin',t:'嗨我是MCK！2024世界无人机竞速锦标赛',u:'https://www.douyin.com/video/7437069664628362535',d:'2024世界无人机竞速锦标赛韩国飞手MCK，杭州世锦赛参赛记录',tg:['世锦赛','杭州'],dt:'2024-11'},
+{id:'m4',who:'MCK(转载)',k:'mck',p:'douyin',t:'MCK同款练习赛道分享',u:'https://www.douyin.com/video/7550321728271011082',d:'世界冠军MCK同款练习赛道，可在黑羊模拟器中导入练习',tg:['同款赛道','黑羊'],dt:'2025-09'},
+{id:'m5',who:'MCK(转载)',k:'mck',p:'douyin',t:'MCK日常训练赛道-黑羊模拟器',u:'https://www.douyin.com/video/7447080821833338162',d:'MCK日常训练赛道在黑羊模拟器中的复刻版本',tg:['日常训练','黑羊'],dt:'2024-12'},
+{id:'m6',who:'MCK(转载)',k:'mck',p:'douyin',t:'2024 FAI世界无人机竞速公开赛MCK夺冠',u:'https://www.douyin.com/video/7455143764277890330',d:'2024 FAI世界无人机竞速公开赛柯桥站，MCK金牌',tg:['FAI','夺冠'],dt:'2025-01'},
+// ====== 其他 ======
+{id:'o1',who:'炸机大叔',k:'other',p:'bilibili',t:'竞速穿越机组装调参手把手教程！全面硬核！',bv:'BV1Y32uBfE5p',u:'https://www.bilibili.com/video/BV1Y32uBfE5p/',d:'全面硬核的竞速机组装调参教程，从零到起飞',tg:['组装','调参'],dt:'2025-11'},
+{id:'o2',who:'JUNFPV',k:'other',p:'douyin',t:'2024世界无人机竞速锦标赛决赛现场',u:'https://www.douyin.com/video/7432947132241300776',d:'2024世锦赛决赛，中国队战胜韩国两位选手拿下第二',tg:['世锦赛','决赛','中国'],dt:'2024-11'},
+{id:'o3',who:'QYFPV',k:'other',p:'douyin',t:'穿越机竞速教学——三联门初学到进阶',u:'https://www.douyin.com/search/穿越机竞速教学',d:'三联门三步练习方法，打杆细节技术要点全讲解',tg:['三联门','教学'],dt:'2025'},
+{id:'o4',who:'FPV-Alex',k:'other',p:'douyin',t:'FPV-Alex竞速训练记录（阿光徒弟）',u:'https://www.douyin.com/user/MS4wLjABAAAAX2XKTmZckK3-_1aibQ7b2azkCpBRLrGbwgkTM_z8WJ9pyvrWPmLhi9mGvMp8wLtQ',d:'阿光徒弟Alex的训练记录，见证从新手到选手的成长',tg:['Alex','徒弟'],dt:'2025'},
+{id:'o5',who:'莱孚模型',k:'other',p:'douyin',t:'莱孚模型-穿越机竞速教程系列',u:'https://www.douyin.com/search/莱孚模型',d:'阿光合作的教程发布账号，全网同步更新竞速教程',tg:['教程','莱孚'],dt:'2026'},
+{id:'o6',who:'Captain Vanover',k:'other',p:'youtube',t:'Captain Vanover FPV Racing Tutorials',u:'https://www.youtube.com/results?search_query=Captain+Vanover+FPV',d:'美国顶级竞速飞手，MultiGP冠军，大量竞速教程',tg:['Vanover','MultiGP'],dt:'持续更新'},
+{id:'o7',who:'MultiGP',k:'other',p:'youtube',t:'MultiGP Drone Racing League Official',u:'https://www.youtube.com/results?search_query=MultiGP+racing+drone',d:'国际顶级FPV竞速赛事官方，比赛记录和训练资源',tg:['MultiGP','官方'],dt:'持续更新'},
+{id:'o8',who:'OHCRFPV',k:'other',p:'douyin',t:'黑羊模拟器赛道分享-MCK日常训练赛道',u:'https://www.douyin.com/video/7447080821833338162',d:'黑羊模拟器中复刻MCK日常训练赛道，含导入教程',tg:['黑羊','赛道'],dt:'2024-12'}
+];
+
+const G=[
+{k:'aguang',av:'阿',n:'阿光的飞行计划',d:'国内知名竞速飞手',lk:'https://space.bilibili.com/89345675',lt:'📺 B站主页',mt:'阿光B站50+竞速视频',ml:'https://space.bilibili.com/89345675'},
+{k:'pofeng',av:'破',n:'破风FPV / 破风小课堂',d:'T-MOTOR官方 | 汇聚全球冠军经验',lk:'https://www.douyin.com/user/MS4wLjABAAAARyGj6XnymS5kLirrit18McQFggTRl3M9t7XL0GlMNCvufk2M22keKWe20DxB9DwU',lt:'📺 抖音主页',mt:'破风抖音100+教学视频',ml:'https://www.douyin.com/user/MS4wLjABAAAARyGj6XnymS5kLirrit18McQFggTRl3M9t7XL0GlMNCvufk2M22keKWe20DxB9DwU'},
+{k:'mck',av:'M',n:'MCK (MinChan Kim)',d:'2023 FAI世锦赛冠军 | "FPV竞速的神"',lk:'https://www.youtube.com/results?search_query=MCK+FPV',lt:'📺 YouTube',mt:'MCK训练视频，抖音粉丝转载',ml:'https://www.douyin.com/search/MCK视频'},
+{k:'other',av:'+',n:'其他竞速博主',d:'炸机大叔/JUNFPV/QYFPV/Captain Vanover/MultiGP等',lk:null,lt:null,mt:null,ml:null}
+];
+
+const pn={bilibili:'B站',douyin:'抖音',youtube:'YouTube'};
+const pc={bilibili:'plat-b',douyin:'plat-d',youtube:'plat-y'};
+
+function card(v){
+    const hasBv=v.bv;
+    return`<div class="card" data-k="${v.k}" data-p="${v.p}">
+<div class="card-top"><div class="card-who">${v.who}<span class="plat ${pc[v.p]}">${pn[v.p]}</span></div><div class="card-title">${v.t}</div></div>
+<div class="card-body">
+<div class="card-desc">${v.d}</div>
+<div class="card-tags">${v.tg.map(t=>`<span class="t">#${t}</span>`).join('')}</div>
+<div class="card-btns">
+${hasBv?`<button class="cb cb-p" onclick="_play('${v.id}',this)">▶ 播放</button>`:''}
+<a class="cb cb-s" href="${v.u}" target="_blank" rel="noopener">🔗 跳转</a>
+</div>
+${hasBv?`<div class="pwrap" id="pw-${v.id}"></div>`:''}
+</div></div>`;
+}
+
+function _play(id,btn){
+    const v=V.find(x=>x.id===id); if(!v||!v.bv)return;
+    const pw=document.getElementById('pw-'+id);
+    if(pw.classList.contains('on')){
+        pw.classList.remove('on');pw.innerHTML='';btn.textContent='▶ 播放';
+    }else{
+        pw.innerHTML=`<iframe src="https://player.bilibili.com/player.html?bvid=${v.bv}&autoplay=0&high_quality=1" allowfullscreen scrolling="no"></iframe><button class="pclose" onclick="_close('${id}',this)">收起 ▲</button>`;
+        pw.classList.add('on');btn.textContent='⏹ 关闭';
+        setTimeout(()=>pw.scrollIntoView({behavior:'smooth',block:'nearest'}),100);
+    }
+}
+function _close(id,btn){
+    const pw=document.getElementById('pw-'+id);
+    pw.classList.remove('on');pw.innerHTML='';
+    const cbtn=pw.closest('.card').querySelector('.cb-p');
+    if(cbtn)cbtn.textContent='▶ 播放';
+}
+
+function render(){
+    document.getElementById('cnt').textContent=V.length;
+    const app=document.getElementById('app');
+    app.innerHTML=G.map(g=>{
+        const vs=V.filter(v=>v.k===g.k);
+        return`<div class="sec" data-k="${g.k}">
+<div class="sec-head">
+<div class="sec-avatar">${g.av}</div>
+<div class="sec-meta"><h2>${g.n}</h2><p>${g.d}</p></div>
+${g.lk?`<a class="sec-link" href="${g.lk}" target="_blank" rel="noopener">${g.lt}</a>`:''}
+</div>
+<div class="grid">${vs.map(card).join('')}</div>
+${g.mt?`<div class="more"><h3>+ 更多${g.av}的视频</h3><p>${g.mt}</p><a class="cb cb-p" href="${g.ml}" target="_blank" rel="noopener" style="display:inline-flex;width:auto;padding:.55rem 1.5rem">查看全部</a></div>`:''}
+</div>`;
+    }).join('');
+}
+
+// Filters
+document.getElementById('filters').addEventListener('click',function(e){
+    const b=e.target.closest('.fbtn');if(!b)return;
+    document.querySelectorAll('.fbtn').forEach(x=>x.classList.remove('on'));
+    b.classList.add('on');
+    const f=b.dataset.f;
+    document.querySelectorAll('.sec').forEach(s=>{
+        const sk=s.dataset.k;
+        if(f==='all'||f===sk){s.style.display='';s.querySelectorAll('.card').forEach(c=>c.style.display='');return;}
+        if(f==='bilibili'||f==='douyin'){s.style.display='';s.querySelectorAll('.card').forEach(c=>{c.style.display=c.dataset.p===f?'':'none';});return;}
+        s.style.display='none';
+    });
+});
+
+render();
+</script>
+</body>
+</html>
