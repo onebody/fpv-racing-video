@@ -286,7 +286,7 @@
 // ====== 更新报告（每次自动更新时覆盖） ======
 // 格式：{ date:'更新日期', count:新增数量, items:[{who:'作者',title:'标题',platform:'平台'}], note:'备注' }
 // 如果没有新增，设 count:0, items:[]
-const UPDATE_REPORT = null;
+const UPDATE_REPORT = {date:"2026-05-09 18:00",count:14,items:[{who:"阿光的飞行计划",title:"2025年联赛-黄山站DVR",platform:"bilibili"},{who:"阿光的飞行计划",title:"2025年联赛-苏州站DVR",platform:"bilibili"},{who:"阿光的飞行计划",title:"FAI 2024世界公开赛DVR",platform:"bilibili"},{who:"阿光的飞行计划",title:"2025年联赛-廊坊站DVR(B站版)",platform:"bilibili"},{who:"阿光的飞行计划",title:"十一假期集训对抗DVR",platform:"bilibili"},{who:"阿光的飞行计划",title:"2025年陕西公开赛DVR",platform:"bilibili"},{who:"阿光的飞行计划",title:"2025年联赛总决赛建湖站DVR",platform:"bilibili"},{who:"阿光的飞行计划",title:"4条赛道老年代步飞DVR",platform:"bilibili"},{who:"MCK FPV",title:"LOCKED",platform:"youtube"},{who:"MCK FPV",title:"100% FOCUS",platform:"youtube"},{who:"MCK FPV",title:"Spec Relaxing",platform:"youtube"},{who:"MCK FPV",title:"umm Warming up.",platform:"youtube"},{who:"MCK FPV",title:"No room for error",platform:"youtube"},{who:"MCK FPV",title:"Faster.",platform:"youtube"}],note:"来源：B站8个 + YouTube 6个 | 下次更新：明日18:00"};
 
 const V=[
 // ====== 阿光 ======
@@ -331,7 +331,23 @@ const V=[
 {id:'o8',who:'OHCRFPV',k:'other',p:'douyin',t:'黑羊模拟器赛道分享-MCK日常训练赛道',u:'https://www.douyin.com/video/7447080821833338162',d:'黑羊模拟器中复刻MCK日常训练赛道，含导入教程',tg:['黑羊','赛道'],dt:'2024-12'},
 {id:'o9',who:'穿越机飞友',k:'other',p:'douyin',t:'穿越机竞速穿双层门技巧（转自破风FPV）',u:'https://www.douyin.com/video/7445987955631508794',d:'双层门穿越技巧，转载自破风FPV，结合黑羊模拟器练习',tg:['双层门','黑羊模拟器','转载'],dt:'2024-11'},
 {id:'o10',who:'穿越机专项练习',k:'other',p:'douyin',t:'穿越机专项练习第三天-倒飞',u:'https://www.douyin.com/search/穿越机赛道训练视频',d:'自制专项练习地图，倒飞专项训练打卡，跟着练更高效',tg:['倒飞','专项练习','打卡'],dt:'2026-01'},
-{id:'o11',who:'DRA联赛',k:'other',p:'douyin',t:'2025年中国无人机竞速联赛总决赛-建湖',u:'https://drafpv.com/',d:'2025年中国无人机竞速联赛总决赛，76支队伍235名顶尖飞手参赛',tg:['联赛','总决赛','DRA'],dt:'2026-02'}
+{id:'o11',who:'DRA联赛',k:'other',p:'douyin',t:'2025年中国无人机竞速联赛总决赛-建湖',u:'https://drafpv.com/',d:'2025年中国无人机竞速联赛总决赛，76支队伍235名顶尖飞手参赛',tg:['联赛','总决赛','DRA'],dt:'2026-02'},
+// ====== 阿光新增（B站竞速赛事DVR） ======
+{id:'a11',who:'阿光的飞行计划',k:'aguang',p:'bilibili',t:'2025年 中国无人机竞速联赛-黄山站 DVR 记录',bv:'BV1XvGtzjEPw',u:'https://www.bilibili.com/video/BV1XvGtzjEPw/',d:'2025年中国无人机竞速联赛黄山站比赛DVR记录，赛道走线与对抗实况',tg:['联赛','黄山','DVR'],dt:'2025-04'},
+{id:'a12',who:'阿光的飞行计划',k:'aguang',p:'bilibili',t:'2025年 中国无人机竞速联赛-苏州站 赛前练习与比赛DVR',bv:'BV1A63VzXEKS',u:'https://www.bilibili.com/video/BV1A63VzXEKS/',d:'2025年中国无人机竞速联赛苏州站，赛前练习与正式比赛DVR完整记录',tg:['联赛','苏州','DVR'],dt:'2025-07'},
+{id:'a13',who:'阿光的飞行计划',k:'aguang',p:'bilibili',t:'国际航联2024世界无人机竞速公开赛 DVR & 赛前训练追逐',bv:'BV1Yv66YkEWM',u:'https://www.bilibili.com/video/BV1Yv66YkEWM/',d:'FAI国际航联2024世界无人机竞速公开赛DVR及赛前训练追逐记录',tg:['FAI','世界赛','追逐'],dt:'2025-01'},
+{id:'a14',who:'阿光的飞行计划',k:'aguang',p:'bilibili',t:'2025年 中国无人机竞速联赛-廊坊站 DVR 记录',bv:'BV1fmM4zCEFf',u:'https://www.bilibili.com/video/BV1fmM4zCEFf/',d:'2025年中国无人机竞速联赛廊坊站比赛DVR记录，B站可播放版',tg:['联赛','廊坊','DVR'],dt:'2025-06'},
+{id:'a15',who:'阿光的飞行计划',k:'aguang',p:'bilibili',t:'穿越机竞速 十一假期 集训对抗DVR记录',bv:'BV1Q14wzCE2e',u:'https://www.bilibili.com/video/BV1Q14wzCE2e/',d:'国庆十一假期穿越机竞速集训对抗DVR记录，多飞手同场训练',tg:['集训','对抗','DVR'],dt:'2025-10'},
+{id:'a16',who:'阿光的飞行计划',k:'aguang',p:'bilibili',t:'2025年陕西无人机公开赛DVR记录',bv:'BV161C7BoEXB',u:'https://www.bilibili.com/video/BV161C7BoEXB/',d:'2025年陕西无人机公开赛比赛DVR记录，省级赛事实战',tg:['公开赛','陕西','DVR'],dt:'2025-11'},
+{id:'a17',who:'阿光的飞行计划',k:'aguang',p:'bilibili',t:'2025年中国无人机竞速联赛总决赛 建湖站 DVR 记录',bv:'BV1ZQFuzBE4L',u:'https://www.bilibili.com/video/BV1ZQFuzBE4L/',d:'2025年中国无人机竞速联赛总决赛建湖站DVR，B站可播放版',tg:['联赛','总决赛','建湖'],dt:'2026-02'},
+{id:'a18',who:'阿光的飞行计划',k:'aguang',p:'bilibili',t:'穿越机竞速 4条赛道 老年代步飞dvr记录',bv:'BV1dVPezjEPB',u:'https://www.bilibili.com/video/BV1dVPezjEPB/',d:'穿越机竞速4条赛道训练DVR记录，含不同赛道走线分析',tg:['赛道','DVR','走线'],dt:'2026-03'},
+// ====== MCK新增（YouTube竞速训练） ======
+{id:'m9',who:'MCK FPV',k:'mck',p:'youtube',t:'MCK FPV - LOCKED',u:'https://www.youtube.com/watch?v=2wKznM8m384',d:'MCK FPV高专注度竞速飞行，全力锁定赛道状态的世界冠军训练视频',tg:['世界冠军','训练','竞速'],dt:'2025'},
+{id:'m10',who:'MCK FPV',k:'mck',p:'youtube',t:'MCK FPV - 100% FOCUS',u:'https://www.youtube.com/watch?v=2JK-3HmSMg4',d:'MCK FPV全神贯注的竞速飞行片段，典型赛道竞速内容',tg:['专注','赛道','竞速'],dt:'2025'},
+{id:'m11',who:'MCK FPV',k:'mck',p:'youtube',t:'MCK FPV - Spec Relaxing',u:'https://www.youtube.com/watch?v=Y78Zs-lZLsw',d:'Spec统一规格赛竞速练习，MCK在Spec级别赛道上的轻松飞行',tg:['Spec','统一规格','练习'],dt:'2025'},
+{id:'m12',who:'MCK FPV',k:'mck',p:'youtube',t:'MCK FPV - umm Warming up.',u:'https://www.youtube.com/watch?v=XuYtHjfcFGw',d:'MCK赛道热身竞速练习片段，世界冠军赛前准备',tg:['热身','赛前','练习'],dt:'2025'},
+{id:'m13',who:'MCK FPV',k:'mck',p:'youtube',t:'MCK FPV - No room for error',u:'https://www.youtube.com/watch?v=BDLdGrNoa9o',d:'MCK FPV高强度竞速飞行，零容错赛道竞速内容',tg:['高强度','零容错','竞速'],dt:'2025'},
+{id:'m14',who:'MCK FPV',k:'mck',p:'youtube',t:'MCK FPV - Faster.',u:'https://www.youtube.com/watch?v=DHGxa5bPEc0',d:'MCK FPV竞速飞行，追求速度极限的世界冠军训练',tg:['速度','极限','训练'],dt:'2025'}
 ];
 
 const G=[
