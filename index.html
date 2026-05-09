@@ -75,6 +75,60 @@
             padding: 1rem; padding-bottom: calc(1rem + var(--safe-bottom));
         }
 
+        /* ===== Update Report ===== */
+        .update-report {
+            background: linear-gradient(135deg, #0c4a6e, #0369a1, #0284c7);
+            border: 2px solid var(--amber);
+            border-radius: var(--r);
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+            animation: reportGlow 2s ease-in-out infinite alternate;
+        }
+        @keyframes reportGlow {
+            from { box-shadow: 0 0 8px rgba(14,165,233,0.3); }
+            to { box-shadow: 0 0 20px rgba(14,165,233,0.6); }
+        }
+        .update-report-header {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: .85rem 1.15rem; background: rgba(0,0,0,0.2);
+            border-bottom: 1px solid rgba(125,211,252,0.25);
+        }
+        .update-report-header h3 {
+            font-size: .95rem; font-weight: 700; color: var(--amber);
+            display: flex; align-items: center; gap: .4rem;
+        }
+        .update-report-header .update-date {
+            font-size: .78rem; color: rgba(255,255,255,0.65);
+        }
+        .update-report-body {
+            padding: .85rem 1.15rem;
+        }
+        .update-report-body .update-summary {
+            font-size: .88rem; color: #e0f2fe; margin-bottom: .6rem; font-weight: 500;
+        }
+        .update-report-body .update-list {
+            list-style: none; padding: 0; margin: 0;
+        }
+        .update-report-body .update-list li {
+            padding: .4rem 0; font-size: .82rem; color: rgba(255,255,255,0.85);
+            border-bottom: 1px solid rgba(125,211,252,0.1);
+            display: flex; align-items: flex-start; gap: .5rem;
+        }
+        .update-report-body .update-list li:last-child { border-bottom: none; }
+        .update-report-body .update-list li::before {
+            content: '🆕'; flex-shrink: 0; font-size: .75rem; margin-top: .1rem;
+        }
+        .update-report-body .update-list .ul-who {
+            color: var(--amber); font-weight: 600; margin-right: .3rem;
+        }
+        .update-report-body .update-empty {
+            font-size: .85rem; color: rgba(255,255,255,0.5); font-style: italic;
+        }
+        .update-report-body .update-detail {
+            font-size: .75rem; color: rgba(255,255,255,0.55); margin-top: .6rem;
+            padding-top: .5rem; border-top: 1px solid rgba(125,211,252,0.15);
+        }
+
         /* ===== Note ===== */
         .note {
             background: var(--bg3); border-left: 4px solid var(--red);
@@ -217,6 +271,8 @@
 </nav>
 
 <main class="wrap">
+    <!-- 更新报告区域 -->
+    <div id="update-report-area"></div>
     <div class="note">
         <b>📱 手机 & 💻 PC 通用</b>
         B站视频点"播放"直接看；抖音/YouTube点"跳转"在APP打开。每个博主底部有主页链接，可查看全部视频。
@@ -227,6 +283,11 @@
 <footer class="ft">FPV Racing Video Library · 仅供学习交流 · 视频版权归原创作者所有<br>© 小马骑云@杭州骑云</footer>
 
 <script>
+// ====== 更新报告（每次自动更新时覆盖） ======
+// 格式：{ date:'更新日期', count:新增数量, items:[{who:'作者',title:'标题',platform:'平台'}], note:'备注' }
+// 如果没有新增，设 count:0, items:[]
+const UPDATE_REPORT = null; // 初始为null，自动更新后填入
+
 const V=[
 // ====== 阿光 ======
 {id:'a1',who:'阿光的飞行计划',k:'aguang',p:'bilibili',t:'阿光的FPV飞行教学4-双连门组合训练',bv:'BV1HT96BEE9h',u:'https://www.bilibili.com/video/BV1HT96BEE9h/',d:'阿光竞速教学系列第四集，详细讲解双连门组合的技术要点和训练方法',tg:['教学','双连门','组合训练'],dt:'2026-04'},
@@ -347,7 +408,37 @@ document.getElementById('filters').addEventListener('click',function(e){
     });
 });
 
+function renderUpdateReport() {
+    const area = document.getElementById('update-report-area');
+    if (!UPDATE_REPORT || UPDATE_REPORT.count === 0) {
+        area.innerHTML = '';
+        return;
+    }
+    const r = UPDATE_REPORT;
+    let itemsHtml = '';
+    if (r.items && r.items.length > 0) {
+        itemsHtml = '<ul class="update-list">' +
+            r.items.map(it =>
+                `<li><span class="ul-who">${it.who}</span>${it.title} <span class="plat ${pc[it.platform]||''}" style="font-size:.6rem;padding:.1rem .3rem;border-radius:3px;vertical-align:middle;margin-left:.3rem">${pn[it.platform]||it.platform}</span></li>`
+            ).join('') +
+            '</ul>';
+    }
+    area.innerHTML = `
+    <div class="update-report">
+        <div class="update-report-header">
+            <h3>🔔 最新更新</h3>
+            <span class="update-date">${r.date}</span>
+        </div>
+        <div class="update-report-body">
+            <div class="update-summary">本次更新新增 <b style="color:#fff;font-size:1.1em">${r.count}</b> 个竞速视频</div>
+            ${itemsHtml}
+            ${r.note ? `<div class="update-detail">${r.note}</div>` : ''}
+        </div>
+    </div>`;
+}
+
 render();
+renderUpdateReport();
 </script>
 </body>
 </html>
