@@ -23,7 +23,7 @@
 
         /* ===== CSS Variables ===== */
         :root {
-            --red: #0ea5e9; --red-dark: #0284c7; --orange: #38bdf8; --amber: #7dd3fc;
+            --red: #ff1744; --red-dark: #c4001d; --orange: #ff5722; --amber: #ff9100;
             --bg: #0a0a0f; --bg2: #12121c; --bg3: #1a1a28; --bg4: #24243a;
             --text: #eee; --text2: #999; --text3: #666;
             --border: #2a2a3a;
@@ -34,7 +34,7 @@
 
         /* ===== Header ===== */
         .header {
-            background: linear-gradient(135deg, #0284c7, #0ea5e9, #38bdf8);
+            background: linear-gradient(135deg, var(--red), var(--orange), var(--amber));
             padding: 2rem 1.25rem 1.5rem;
             text-align: center;
             padding-top: calc(2rem + var(--safe-top));
@@ -75,60 +75,6 @@
             padding: 1rem; padding-bottom: calc(1rem + var(--safe-bottom));
         }
 
-        /* ===== Update Report ===== */
-        .update-report {
-            background: linear-gradient(135deg, #0c4a6e, #0369a1, #0284c7);
-            border: 2px solid var(--amber);
-            border-radius: var(--r);
-            margin-bottom: 1.5rem;
-            overflow: hidden;
-            animation: reportGlow 2s ease-in-out infinite alternate;
-        }
-        @keyframes reportGlow {
-            from { box-shadow: 0 0 8px rgba(14,165,233,0.3); }
-            to { box-shadow: 0 0 20px rgba(14,165,233,0.6); }
-        }
-        .update-report-header {
-            display: flex; align-items: center; justify-content: space-between;
-            padding: .85rem 1.15rem; background: rgba(0,0,0,0.2);
-            border-bottom: 1px solid rgba(125,211,252,0.25);
-        }
-        .update-report-header h3 {
-            font-size: .95rem; font-weight: 700; color: var(--amber);
-            display: flex; align-items: center; gap: .4rem;
-        }
-        .update-report-header .update-date {
-            font-size: .78rem; color: rgba(255,255,255,0.65);
-        }
-        .update-report-body {
-            padding: .85rem 1.15rem;
-        }
-        .update-report-body .update-summary {
-            font-size: .88rem; color: #e0f2fe; margin-bottom: .6rem; font-weight: 500;
-        }
-        .update-report-body .update-list {
-            list-style: none; padding: 0; margin: 0;
-        }
-        .update-report-body .update-list li {
-            padding: .4rem 0; font-size: .82rem; color: rgba(255,255,255,0.85);
-            border-bottom: 1px solid rgba(125,211,252,0.1);
-            display: flex; align-items: flex-start; gap: .5rem;
-        }
-        .update-report-body .update-list li:last-child { border-bottom: none; }
-        .update-report-body .update-list li::before {
-            content: '🆕'; flex-shrink: 0; font-size: .75rem; margin-top: .1rem;
-        }
-        .update-report-body .update-list .ul-who {
-            color: var(--amber); font-weight: 600; margin-right: .3rem;
-        }
-        .update-report-body .update-empty {
-            font-size: .85rem; color: rgba(255,255,255,0.5); font-style: italic;
-        }
-        .update-report-body .update-detail {
-            font-size: .75rem; color: rgba(255,255,255,0.55); margin-top: .6rem;
-            padding-top: .5rem; border-top: 1px solid rgba(125,211,252,0.15);
-        }
-
         /* ===== Note ===== */
         .note {
             background: var(--bg3); border-left: 4px solid var(--red);
@@ -147,7 +93,7 @@
         }
         .sec-avatar {
             width: 48px; height: 48px; border-radius: 50%;
-            background: linear-gradient(135deg, #0284c7, #0ea5e9);
+            background: linear-gradient(135deg, var(--red), var(--orange));
             display: flex; align-items: center; justify-content: center;
             font-size: 1.2rem; font-weight: 700; flex-shrink: 0;
         }
@@ -271,8 +217,6 @@
 </nav>
 
 <main class="wrap">
-    <!-- 更新报告区域 -->
-    <div id="update-report-area"></div>
     <div class="note">
         <b>📱 手机 & 💻 PC 通用</b>
         B站视频点"播放"直接看；抖音/YouTube点"跳转"在APP打开。每个博主底部有主页链接，可查看全部视频。
@@ -280,28 +224,9 @@
     <div id="app"></div>
 </main>
 
-<footer class="ft">FPV Racing Video Library · 仅供学习交流 · 视频版权归原创作者所有<br>© 小马骑云@杭州骑云</footer>
+<footer class="ft">FPV Racing Video Library · 仅供学习交流 · 视频版权归原创作者所有</footer>
 
 <script>
-// ====== 更新报告（每次自动更新时覆盖） ======
-// 格式：{ date:'更新日期', count:新增数量, items:[{who:'作者',title:'标题',platform:'平台'}], note:'备注' }
-// 如果没有新增，设 count:0, items:[]
-const UPDATE_REPORT = {
-  date: "2026-07-29 10:37",
-  count: 8,
-  items: [
-    {who:"阿光的飞行计划",title:"穿越机竞速 带训赛道追逐DVR记录",platform:"bilibili"},
-    {who:"阿光的飞行计划",title:"穿越机竞速 7月集训赛道 DVR记录",platform:"bilibili"},
-    {who:"阿光的飞行计划",title:"穿越机竞速 带训赛道DVR记录0607",platform:"bilibili"},
-    {who:"阿光的飞行计划",title:"2026无人机竞速世界杯（宁波鄞州站）DVR记录",platform:"bilibili"},
-    {who:"阿光的飞行计划",title:"穿越机竞速赛道练习 常州C2C城市赛走线版",platform:"bilibili"},
-    {who:"阿光的飞行计划",title:"第十五届全运会 F9U团体 DVR记录",platform:"bilibili"},
-    {who:"阿光的飞行计划",title:"穿越机竞速带训赛道DVR记录 50%限制+走线",platform:"douyin"},
-    {who:"破风小课堂",title:"竞速比赛灯带快拆方案分享",platform:"bilibili"}
-  ],
-  note: "来源：B站/抖音 | 阿光2026年7月最新集训DVR + 宁波世界杯 + 全运会F9U团体赛 | 破风小课堂赛事灯带方案 | 下次更新：每日18:00"
-};
-
 const V=[
 // ====== 阿光 ======
 {id:'a1',who:'阿光的飞行计划',k:'aguang',p:'bilibili',t:'阿光的FPV飞行教学4-双连门组合训练',bv:'BV1HT96BEE9h',u:'https://www.bilibili.com/video/BV1HT96BEE9h/',d:'阿光竞速教学系列第四集，详细讲解双连门组合的技术要点和训练方法',tg:['教学','双连门','组合训练'],dt:'2026-04'},
@@ -311,16 +236,6 @@ const V=[
 {id:'a5',who:'阿光的飞行计划',k:'aguang',p:'douyin',t:'穿越机竞速 五一带训赛道 走线记录DVR',u:'https://www.douyin.com/video/7500941677465980199',d:'五一带训赛道走线记录，最佳飞行线路和控高技巧',tg:['走线','赛道','控高'],dt:'2025-05'},
 {id:'a6',who:'阿光的飞行计划',k:'aguang',p:'douyin',t:'2025年中国无人机竞速联赛-廊坊站 DVR',u:'https://www.douyin.com/video/7516356154533842235',d:'中国无人机竞速联赛廊坊站DVR，国内顶级竞速赛事',tg:['联赛','廊坊','DVR'],dt:'2025'},
 {id:'a7',who:'阿光的飞行计划',k:'aguang',p:'douyin',t:'穿越机竞速带训赛道DVR-走线记录',u:'https://www.douyin.com/search/阿光飞行计划分享',d:'带训赛道走线记录，与山城小飞侠等飞手的互动训练',tg:['带训','走线'],dt:'2026-04'},
-{id:'a8',who:'阿光的飞行计划',k:'aguang',p:'bilibili',t:'穿越机竞速 五一集训赛道1/2/3 DVR记录',bv:'BV1pJRnBaE5u',u:'https://www.bilibili.com/video/BV1pJRnBaE5u/',d:'五一集训赛道三条赛道的DVR完整记录，含走线分析和训练心得',tg:['集训','DVR','走线'],dt:'2026-05'},
-{id:'a9',who:'阿光的飞行计划',k:'aguang',p:'douyin',t:'阿光的FPV飞行教学3（上）基础飞行：控高、绕八字、日子门',u:'https://www.douyin.com/search/阿光教程书',d:'教学系列第三期上，讲解基础飞行：控高技巧、绕八字训练、日子门穿越',tg:['教学','控高','绕八字','日子门'],dt:'2026-04'},
-{id:'a10',who:'阿光的飞行计划',k:'aguang',p:'douyin',t:'阿光的FPV飞行教学2-地面站及电调参数分享',u:'https://www.douyin.com/search/阿光教程书',d:'教学系列第二期，讲解地面站参数设置、Rate调整、电调参数配置',tg:['教学','地面站','Rate','电调'],dt:'2026-04'},
-{id:'a11',who:'阿光的飞行计划',k:'aguang',p:'bilibili',t:'穿越机竞速 带训赛道追逐DVR记录',bv:'BV1h9NR6WE9w',u:'https://www.bilibili.com/video/BV1h9NR6WE9w/',d:'带训赛道追逐练习DVR，展现高强度对抗下的追线技巧与控距能力',tg:['带训','追逐','DVR','走线'],dt:'2026-07'},
-{id:'a12',who:'阿光的飞行计划',k:'aguang',p:'bilibili',t:'穿越机竞速 7月集训赛道 DVR记录',bv:'BV1q4N56UEkg',u:'https://www.bilibili.com/video/BV1q4N56UEkg/',d:'7月集训赛道完整DVR，最新走线版本与训练心得',tg:['集训','7月','DVR'],dt:'2026-07'},
-{id:'a13',who:'阿光的飞行计划',k:'aguang',p:'bilibili',t:'穿越机竞速 带训赛道DVR记录0607',bv:'BV14nEt6MEu9',u:'https://www.bilibili.com/video/BV14nEt6MEu9/',d:'6月7日带训赛道DVR，主打基础走线与节奏控制',tg:['带训','DVR','走线'],dt:'2026-06'},
-{id:'a14',who:'阿光的飞行计划',k:'aguang',p:'bilibili',t:'2026无人机竞速世界杯（中国·宁波鄞州站） DVR 记录',bv:'BV1sW796MEW9',u:'https://www.bilibili.com/video/BV1sW796MEW9/',d:'2026无人机竞速世界杯宁波鄞州站参赛DVR，国际顶级赛事实战记录',tg:['世界杯','宁波','赛事DVR'],dt:'2026-06'},
-{id:'a15',who:'阿光的飞行计划',k:'aguang',p:'bilibili',t:'穿越机竞速赛道练习 "常州C2C城市赛" 休闲走线版',bv:'BV11sLn66E5r',u:'https://www.bilibili.com/video/BV11sLn66E5r/',d:'常州C2C城市赛赛道练习休闲走线版，适合熟悉城市赛道布局',tg:['城市赛','走线','常州'],dt:'2026-05'},
-{id:'a16',who:'阿光的飞行计划',k:'aguang',p:'bilibili',t:'第十五届全运会群众比赛（航空）模型 F9U团体 DVR记录',bv:'BV1DoWJzEECZ',u:'https://www.bilibili.com/video/BV1DoWJzEECZ/',d:'第十五届全运会航空模型F9U项目团体赛DVR记录，国家级竞速赛事',tg:['全运会','F9U','团体赛'],dt:'2025-10'},
-{id:'a17',who:'阿光的飞行计划',k:'aguang',p:'douyin',t:'穿越机竞速带训赛道DVR记录 50%限制+走线',u:'https://www.douyin.com/video/7593340055398157574',d:'50%油门限制下的带训赛道DVR，专注精准走线与控高训练',tg:['带训','50%限制','走线'],dt:'2026-01'},
 // ====== 破风 ======
 {id:'p1',who:'破风FPV',k:'pofeng',p:'douyin',t:'破风教你学竞速——过S弯',u:'https://www.douyin.com/video/7572144222250208566',d:'S弯核心在于线路优化与动作衔接，通过合理规划路径、控制油门、精准转向实现高效过弯',tg:['S弯','线路','过弯'],dt:'2025-11'},
 {id:'p2',who:'破风FPV',k:'pofeng',p:'douyin',t:'破风教你学竞速——过重力门',u:'https://www.douyin.com/video/7609999878340797642',d:'重力门是竞速中最难的门型之一，详细讲解穿越技巧和训练方法',tg:['重力门','高难度'],dt:'2026-02'},
@@ -330,9 +245,6 @@ const V=[
 {id:'p6',who:'破风FPV',k:'pofeng',p:'douyin',t:'Racing竞速分享——两个门也能飞出花',u:'https://www.douyin.com/search/破风fpv穿越机',d:'简单双门组合，通过不同飞行线路和技巧也能玩出花样',tg:['双门','线路变化'],dt:'2025'},
 {id:'p7',who:'破风FPV',k:'pofeng',p:'douyin',t:'破风教你学竞速——三联门飞行经验分享',u:'https://www.douyin.com/search/穿越机竞速赛道门',d:'三联门初学到进阶，三步练习方法，打杆细节全讲解',tg:['三联门','打杆'],dt:'2025'},
 {id:'p8',who:'破风小课堂',k:'pofeng',p:'bilibili',t:'破风小课堂-每天一个穿越机小知识',u:'https://space.bilibili.com/3493077213776857',d:'T-MOTOR旗下官方账号，每天讲解穿越机竞速小知识',tg:['小课堂','官方'],dt:'持续更新'},
-{id:'p9',who:'破风FPV',k:'pofeng',p:'douyin',t:'破风教你学竞速——双层塔过门',u:'https://www.douyin.com/video/7444861067701865780',d:'双层塔门型穿越技巧，进阶竞速必学门型',tg:['双层塔','过门','进阶'],dt:'2024-11'},
-{id:'p10',who:'破风FPV',k:'pofeng',p:'douyin',t:'破风教你学竞速——绕8字',u:'https://www.douyin.com/video/7458089397028687119',d:'绕8字是竞速基础训练核心动作，详细讲解绕8字的线路和节奏',tg:['绕8字','基础','节奏'],dt:'2025-01'},
-{id:'p11',who:'破风小课堂',k:'pofeng',p:'bilibili',t:'竞速比赛灯带快拆方案分享',bv:'BV1M3acz2Evm',u:'https://www.bilibili.com/video/BV1M3acz2Evm/',d:'破风小课堂分享竞速比赛灯带快拆方案，方便赛事快速布置与拆收',tg:['灯带','赛事','快拆'],dt:'2025-09'},
 // ====== MCK ======
 {id:'m1',who:'MCK FPV',k:'mck',p:'youtube',t:'MCK FPV - World Champion Training',u:'https://www.youtube.com/results?search_query=MCK+FPV+racing',d:'MCK官方YouTube频道，世界冠军训练视频和比赛记录。2023 FAI世锦赛冠军',tg:['世界冠军','训练','官方'],dt:'持续更新'},
 {id:'m2',who:'MCK(转载)',k:'mck',p:'douyin',t:'世界冠军MCK最新训练视频',u:'https://www.douyin.com/video/7462296370158783763',d:'转载MCK最新训练视频，学习世界冠军的训练方法和赛道策略',tg:['训练','冠军'],dt:'2025-01'},
@@ -340,8 +252,6 @@ const V=[
 {id:'m4',who:'MCK(转载)',k:'mck',p:'douyin',t:'MCK同款练习赛道分享',u:'https://www.douyin.com/video/7550321728271011082',d:'世界冠军MCK同款练习赛道，可在黑羊模拟器中导入练习',tg:['同款赛道','黑羊'],dt:'2025-09'},
 {id:'m5',who:'MCK(转载)',k:'mck',p:'douyin',t:'MCK日常训练赛道-黑羊模拟器',u:'https://www.douyin.com/video/7447080821833338162',d:'MCK日常训练赛道在黑羊模拟器中的复刻版本',tg:['日常训练','黑羊'],dt:'2024-12'},
 {id:'m6',who:'MCK(转载)',k:'mck',p:'douyin',t:'2024 FAI世界无人机竞速公开赛MCK夺冠',u:'https://www.douyin.com/video/7455143764277890330',d:'2024 FAI世界无人机竞速公开赛柯桥站，MCK金牌',tg:['FAI','夺冠'],dt:'2025-01'},
-{id:'m7',who:'MCK(转载)',k:'mck',p:'douyin',t:'2025利雅得无人机竞速世界杯MCK夺冠',u:'https://www.douyin.com/search/mck+drl',d:'2025 Riyadh Drone Racing World Cup，MCK再获世界冠军',tg:['世界杯','利雅得','夺冠'],dt:'2025'},
-{id:'m8',who:'MCK(转载)',k:'mck',p:'douyin',t:'Minjae击败MCK！2025首尔FAI新神降临',u:'https://www.douyin.com/search/mck+drl',d:'2025首尔FAI赛事，Minjae击败MCK夺得冠军，FPV竞速新格局',tg:['FAI','首尔','新冠军'],dt:'2025'},
 // ====== 其他 ======
 {id:'o1',who:'炸机大叔',k:'other',p:'bilibili',t:'竞速穿越机组装调参手把手教程！全面硬核！',bv:'BV1Y32uBfE5p',u:'https://www.bilibili.com/video/BV1Y32uBfE5p/',d:'全面硬核的竞速机组装调参教程，从零到起飞',tg:['组装','调参'],dt:'2025-11'},
 {id:'o2',who:'JUNFPV',k:'other',p:'douyin',t:'2024世界无人机竞速锦标赛决赛现场',u:'https://www.douyin.com/video/7432947132241300776',d:'2024世锦赛决赛，中国队战胜韩国两位选手拿下第二',tg:['世锦赛','决赛','中国'],dt:'2024-11'},
@@ -351,15 +261,67 @@ const V=[
 {id:'o6',who:'Captain Vanover',k:'other',p:'youtube',t:'Captain Vanover FPV Racing Tutorials',u:'https://www.youtube.com/results?search_query=Captain+Vanover+FPV',d:'美国顶级竞速飞手，MultiGP冠军，大量竞速教程',tg:['Vanover','MultiGP'],dt:'持续更新'},
 {id:'o7',who:'MultiGP',k:'other',p:'youtube',t:'MultiGP Drone Racing League Official',u:'https://www.youtube.com/results?search_query=MultiGP+racing+drone',d:'国际顶级FPV竞速赛事官方，比赛记录和训练资源',tg:['MultiGP','官方'],dt:'持续更新'},
 {id:'o8',who:'OHCRFPV',k:'other',p:'douyin',t:'黑羊模拟器赛道分享-MCK日常训练赛道',u:'https://www.douyin.com/video/7447080821833338162',d:'黑羊模拟器中复刻MCK日常训练赛道，含导入教程',tg:['黑羊','赛道'],dt:'2024-12'},
-{id:'o9',who:'穿越机飞友',k:'other',p:'douyin',t:'穿越机竞速穿双层门技巧（转自破风FPV）',u:'https://www.douyin.com/video/7445987955631508794',d:'双层门穿越技巧，转载自破风FPV，结合黑羊模拟器练习',tg:['双层门','黑羊模拟器','转载'],dt:'2024-11'},
-{id:'o10',who:'穿越机专项练习',k:'other',p:'douyin',t:'穿越机专项练习第三天-倒飞',u:'https://www.douyin.com/search/穿越机赛道训练视频',d:'自制专项练习地图，倒飞专项训练打卡，跟着练更高效',tg:['倒飞','专项练习','打卡'],dt:'2026-01'},
-{id:'o11',who:'DRA联赛',k:'other',p:'douyin',t:'2025年中国无人机竞速联赛总决赛-建湖',u:'https://drafpv.com/',d:'2025年中国无人机竞速联赛总决赛，76支队伍235名顶尖飞手参赛',tg:['联赛','总决赛','DRA'],dt:'2026-02'}
+// ====== 2026-07-30 自动更新新增 ======
+{id:'a11',who:'阿光的飞行计划',k:'aguang',p:'bilibili',t:'穿越机竞速 带训赛道追逐DVR记录',bv:'BV1h9NR6WE9w',u:'https://www.bilibili.com/video/BV1h9NR6WE9w/',d:'阿光2026年最新竞速带训追逐DVR，展示实际赛道追逐中的走线与对抗策略',tg:['竞速','带训','追逐','DVR'],dt:'2026-07'},
+{id:'m9',who:'MCK(转载)',k:'mck',p:'bilibili',t:'FPV世界冠军MCK训练DVR 纵享丝滑',bv:'BV1XZvNzrEMp',u:'https://www.bilibili.com/video/BV1XZvNzrEMp/',d:'MCK训练DVR记录，全程丝滑走线，世界冠军级别的竞速线路与打杆细节',tg:['MCK','训练','DVR','冠军'],dt:'2025-08'},
+{id:'m10',who:'MCK(转载)',k:'mck',p:'bilibili',t:'MCK日常训练 硬抬天花板高度',bv:'BV1xgptzfEnr',u:'https://www.bilibili.com/video/BV1xgptzfEnr/',d:'MCK日常竞速训练，极限控高与天花板高度挑战，速度不见慢',tg:['MCK','日常训练','控高'],dt:'2025-09'},
+{id:'m11',who:'MCK(转载)',k:'mck',p:'bilibili',t:'MCK日常训练 蛇门横梁安排',bv:'BV1MKk9BTEyx',u:'https://www.bilibili.com/video/BV1MKk9BTEyx/',d:'MCK日常训练蛇形门横梁练习，竞速线路优化与连续转向',tg:['MCK','蛇门','训练'],dt:'2025-11'},
+{id:'m12',who:'MCK(转载)',k:'mck',p:'bilibili',t:'2026敬亭山无人机拉力赛 MCK',bv:'BV1TANA6iEeh',u:'https://www.bilibili.com/video/BV1TANA6iEeh/',d:'2026敬亭山无人机拉力赛MCK参赛记录，世界冠军竞速实战',tg:['MCK','拉力赛','2026'],dt:'2026'},
+{id:'m13',who:'MCK(转载)',k:'mck',p:'bilibili',t:'MCK资格赛录屏 柯桥世界公开赛',bv:'BV1Cp6yYTE62',u:'https://www.bilibili.com/video/BV1Cp6yYTE62/',d:'MCK柯桥世界公开赛资格赛录屏，竞速排位与线路策略',tg:['MCK','资格赛','柯桥'],dt:'2025-01'},
+{id:'m14',who:'MCK(转载)',k:'mck',p:'bilibili',t:'2026MCK日常训练 手感依然在',bv:'BV14miWBNEcW',u:'https://www.bilibili.com/video/BV14miWBNEcW/',d:'2026年MCK日常训练记录，速度不见慢，竞速手感保持',tg:['MCK','日常训练','2026'],dt:'2026-01'},
+{id:'m15',who:'MCK(转载)',k:'mck',p:'bilibili',t:'FPV竞速A2RL决赛 最强人类MCK VS 最强AI',bv:'BV1GL67BqEfw',u:'https://www.bilibili.com/video/BV1GL67BqEfw/',d:'A2RL无人机竞速决赛，人类冠军MCK对战AI，竞速巅峰对决',tg:['MCK','A2RL','人机对战'],dt:'2025-2026'},
+{id:'o12',who:'M_FPV-Ghost',k:'other',p:'bilibili',t:'2025DRA廊坊站 亚军DVR记录',bv:'BV1PhMszmESK',u:'https://www.bilibili.com/video/BV1PhMszmESK/',d:'2025DRA廊坊站竞速亚军DVR，高水平赛道走线参考',tg:['DRA','廊坊','DVR'],dt:'2025-06'},
+{id:'o13',who:'其他飞手',k:'other',p:'bilibili',t:'中国无人机竞速联赛荆门站 第16名DVR',bv:'BV1zUx4zRETh',u:'https://www.bilibili.com/video/BV1zUx4zRETh/',d:'中国无人机竞速联赛荆门站DVR记录，超清打杆+原声',tg:['联赛','荆门','DVR'],dt:'2025-10'},
+{id:'o14',who:'YUKI',k:'other',p:'bilibili',t:'冠军Minjae Kim 黄山站DVR',bv:'BV1AiG9zrEDN',u:'https://www.bilibili.com/video/BV1AiG9zrEDN/',d:'冠军Minjae Kim黄山站DVR，YUKI发挥实力的竞速线路',tg:['MinjaeKim','黄山','DVR'],dt:'2025-04'},
+{id:'o15',who:'Yuki',k:'other',p:'bilibili',t:'2026无人机竞速世界杯总决赛冠军DVR',bv:'BV1hSVB68EUM',u:'https://www.bilibili.com/video/BV1hSVB68EUM/',d:'2026无人机竞速世界杯总决赛公开组冠军DVR，T-HOBBY飞手Yuki',tg:['世界杯','总决赛','2026'],dt:'2026-06'},
+{id:'o16',who:'竞速训练飞手',k:'other',p:'bilibili',t:'竞速训练P17 明天就去省运会了',bv:'BV1Mxgx6mEkF',u:'https://www.bilibili.com/video/BV1Mxgx6mEkF/',d:'省运会前竞速训练记录，实飞走线与状态调整',tg:['竞速训练','省运会'],dt:'2025-07'},
+{id:'o17',who:'竞速训练飞手',k:'other',p:'bilibili',t:'竞速训练P14 撞个不停的一天',bv:'BV1R2N36MEqs',u:'https://www.bilibili.com/video/BV1R2N36MEqs/',d:'竞速训练日常，反复练习中的失误与修正',tg:['竞速训练','练习'],dt:'2025-07'},
+{id:'o18',who:'TDog(转载)',k:'other',p:'bilibili',t:'1s 65圈机竞速练习搬运',bv:'BV1Tuv9BSEA5',u:'https://www.bilibili.com/video/BV1Tuv9BSEA5/',d:'65圈竞速练习搬运，高频训练中的线路打磨',tg:['竞速练习','65圈'],dt:'2025-01'},
+{id:'o19',who:'TDog(转载)',k:'other',p:'bilibili',t:'那个男人又开始练习了 65圈竞速练习',bv:'BV1dXrxBTEGy',u:'https://www.bilibili.com/video/BV1dXrxBTEGy/',d:'TDog FPV 65圈竞速练习搬运，持续打磨竞速手感',tg:['竞速练习','TDog'],dt:'2025-01'},
+// ====== 2026-07-31 自动更新新增 ======
+{id:'a12',who:'阿光的飞行计划',k:'aguang',p:'bilibili',t:'穿越机竞速 7月集训赛道对抗DVR记录',bv:'BV12FNg6DEkg',u:'https://www.bilibili.com/video/BV12FNg6DEkg/',d:'2026年7月集训赛道对抗DVR，多机同场竞速的走线争夺与超车时机把握',tg:['集训','对抗','DVR'],dt:'2026-07'},
+{id:'a13',who:'阿光的飞行计划',k:'aguang',p:'bilibili',t:'穿越机竞速 7月集训赛道 DVR记录',bv:'BV1q4N56UEkg',u:'https://www.bilibili.com/video/BV1q4N56UEkg/',d:'7月集训赛道单飞DVR，完整赛道走线拆解与节奏控制',tg:['集训','赛道','DVR'],dt:'2026-07'},
+{id:'a14',who:'阿光的飞行计划',k:'aguang',p:'bilibili',t:'穿越机竞速 带训赛道DVR记录0607',bv:'BV14nEt6MEu9',u:'https://www.bilibili.com/video/BV14nEt6MEu9/',d:'6月带训赛道DVR记录，教练视角的线路示范与门型衔接',tg:['带训','走线','DVR'],dt:'2026-06'},
+{id:'a15',who:'阿光的飞行计划',k:'aguang',p:'bilibili',t:'2026无人机竞速世界杯（中国·宁波鄞州站）DVR记录',bv:'BV1sW796MEW9',u:'https://www.bilibili.com/video/BV1sW796MEW9/',d:'2026无人机竞速世界杯宁波鄞州站参赛DVR，国际级赛事实战记录',tg:['世界杯','宁波','DVR'],dt:'2026-06'},
+{id:'a16',who:'阿光的飞行计划',k:'aguang',p:'bilibili',t:'穿越机竞速赛道练习 常州C2C城市赛 休闲走线版',bv:'BV11sLn66E5r',u:'https://www.bilibili.com/video/BV11sLn66E5r/',d:'常州C2C城市赛赛道练习，休闲节奏下的线路选择与赛道解析',tg:['C2C','城市赛','走线'],dt:'2026-05'},
+{id:'a17',who:'阿光的飞行计划',k:'aguang',p:'bilibili',t:'穿越机竞速 五一集训赛道1/2/3 DVR记录',bv:'BV1pJRnBaE5u',u:'https://www.bilibili.com/video/BV1pJRnBaE5u/',d:'五一集训三套赛道连续DVR，不同赛道构型下的适应与调整',tg:['集训','五一','DVR'],dt:'2026-05'},
+{id:'a18',who:'阿光的飞行计划',k:'aguang',p:'bilibili',t:'2025年中国无人机竞速联赛总决赛 建湖站 DVR记录',bv:'BV1ZQFuzBE4L',u:'https://www.bilibili.com/video/BV1ZQFuzBE4L/',d:'2025中国无人机竞速联赛总决赛建湖站DVR，年度收官战实战记录',tg:['联赛','总决赛','建湖'],dt:'2026-02'},
+{id:'m16',who:'北们FPV',k:'mck',p:'bilibili',t:'MCK 16进8淘汰赛第二轮',bv:'BV1rgKj6wE2v',u:'https://www.bilibili.com/video/BV1rgKj6wE2v/',d:'MCK淘汰赛16进8第二轮，世界冠军在高压淘汰赛制下的稳定发挥',tg:['MCK','淘汰赛','2026'],dt:'2026-07'},
+{id:'m17',who:'北们FPV',k:'mck',p:'bilibili',t:'MCK排位赛惊天一圈 现场解说版',bv:'BV1AMNg6jELP',u:'https://www.bilibili.com/video/BV1AMNg6jELP/',d:'MCK排位赛单圈极限表现，含现场解说，展示顶级排位圈速的线路取舍',tg:['MCK','排位赛','解说'],dt:'2026-07'},
+{id:'m18',who:'Xuhan_fpv',k:'mck',p:'bilibili',t:'敬亭山拉力赛（纯MCK版）',bv:'BV1TYNQ6gE3n',u:'https://www.bilibili.com/video/BV1TYNQ6gE3n/',d:'2026敬亭山无人机拉力赛MCK专属剪辑，全程跟随世界冠军视角',tg:['MCK','敬亭山','拉力赛'],dt:'2026-07'},
+{id:'o20',who:'小陈新年快乐吖',k:'other',p:'bilibili',t:'2026浙江省联赛绍兴站DVR',bv:'BV1Au376nE1F',u:'https://www.bilibili.com/video/BV1Au376nE1F/',d:'2026浙江省无人机竞速联赛绍兴站DVR，省级赛事赛道走线参考',tg:['浙江联赛','绍兴','DVR'],dt:'2026-07'},
+{id:'o21',who:'ZJYFPV',k:'other',p:'bilibili',t:'论如何用电机烧水 竞速训练P16',bv:'BV1CwK56fEB5',u:'https://www.bilibili.com/video/BV1CwK56fEB5/',d:'竞速训练系列P16，高强度连续飞行下的动力系统与手感磨合',tg:['竞速训练','系列'],dt:'2026-07'},
+{id:'o22',who:'ZJYFPV',k:'other',p:'bilibili',t:'竞速训练P15',bv:'BV1YJNS63EbY',u:'https://www.bilibili.com/video/BV1YJNS63EbY/',d:'竞速训练系列P15，赛前备战阶段的日常线路打磨记录',tg:['竞速训练','系列'],dt:'2026-07'},
+// ====== 合并自线上版本（保留已发布内容）======
+{id:'a19',who:'阿光的飞行计划',k:'aguang',p:'bilibili',t:'第十五届全运会群众比赛（航空）模型 F9U团体 DVR记录',bv:'BV1DoWJzEECZ',u:'https://www.bilibili.com/video/BV1DoWJzEECZ/',d:'第十五届全运会航空模型F9U项目团体赛DVR记录，国家级竞速赛事',tg:['全运会','F9U','团体赛'],dt:'2025-10'},
+{id:'p11',who:'破风小课堂',k:'pofeng',p:'bilibili',t:'竞速比赛灯带快拆方案分享',bv:'BV1M3acz2Evm',u:'https://www.bilibili.com/video/BV1M3acz2Evm/',d:'破风小课堂分享竞速比赛灯带快拆方案，方便赛事快速布置与拆收',tg:['灯带','赛事','快拆'],dt:'2025-09'}
 ];
+
+const UPDATE_REPORT = {
+  date: "2026-07-31 18:00",
+  count: 13,
+  items: [
+    {who:"阿光的飞行计划",title:"穿越机竞速 7月集训赛道对抗DVR记录",platform:"bilibili"},
+    {who:"阿光的飞行计划",title:"穿越机竞速 7月集训赛道 DVR记录",platform:"bilibili"},
+    {who:"阿光的飞行计划",title:"穿越机竞速 带训赛道DVR记录0607",platform:"bilibili"},
+    {who:"阿光的飞行计划",title:"2026无人机竞速世界杯（中国·宁波鄞州站）DVR记录",platform:"bilibili"},
+    {who:"阿光的飞行计划",title:"穿越机竞速赛道练习 常州C2C城市赛 休闲走线版",platform:"bilibili"},
+    {who:"阿光的飞行计划",title:"穿越机竞速 五一集训赛道1/2/3 DVR记录",platform:"bilibili"},
+    {who:"阿光的飞行计划",title:"2025年中国无人机竞速联赛总决赛 建湖站 DVR记录",platform:"bilibili"},
+    {who:"北们FPV",title:"MCK 16进8淘汰赛第二轮",platform:"bilibili"},
+    {who:"北们FPV",title:"MCK排位赛惊天一圈 现场解说版",platform:"bilibili"},
+    {who:"Xuhan_fpv",title:"敬亭山拉力赛（纯MCK版）",platform:"bilibili"},
+    {who:"小陈新年快乐吖",title:"2026浙江省联赛绍兴站DVR",platform:"bilibili"},
+    {who:"ZJYFPV",title:"论如何用电机烧水 竞速训练P16",platform:"bilibili"},
+    {who:"ZJYFPV",title:"竞速训练P15",platform:"bilibili"}
+  ],
+  note: "来源：B站/抖音/YouTube | 本次新增13个竞速视频（阿光7、MCK 3、其他3），已排除花飞、产品推广与入门教程；并修复了上一版数据数组的语法错误 | 下次更新：明日18:00"
+};
 
 const G=[
 {k:'aguang',av:'阿',n:'阿光的飞行计划',d:'国内知名竞速飞手',lk:'https://space.bilibili.com/89345675',lt:'📺 B站主页',mt:'阿光B站50+竞速视频',ml:'https://space.bilibili.com/89345675'},
 {k:'pofeng',av:'破',n:'破风FPV / 破风小课堂',d:'T-MOTOR官方 | 汇聚全球冠军经验',lk:'https://www.douyin.com/user/MS4wLjABAAAARyGj6XnymS5kLirrit18McQFggTRl3M9t7XL0GlMNCvufk2M22keKWe20DxB9DwU',lt:'📺 抖音主页',mt:'破风抖音100+教学视频',ml:'https://www.douyin.com/user/MS4wLjABAAAARyGj6XnymS5kLirrit18McQFggTRl3M9t7XL0GlMNCvufk2M22keKWe20DxB9DwU'},
-{k:'mck',av:'M',n:'MCK (MinChan Kim)',d:'2023/2024/2025 FAI世锦赛冠军 | "FPV竞速的神"',lk:'https://www.youtube.com/results?search_query=MCK+FPV',lt:'📺 YouTube',mt:'MCK训练视频，抖音粉丝转载',ml:'https://www.douyin.com/search/MCK视频'},
+{k:'mck',av:'M',n:'MCK (MinChan Kim)',d:'2023 FAI世锦赛冠军 | "FPV竞速的神"',lk:'https://www.youtube.com/results?search_query=MCK+FPV',lt:'📺 YouTube',mt:'MCK训练视频，抖音粉丝转载',ml:'https://www.douyin.com/search/MCK视频'},
 {k:'other',av:'+',n:'其他竞速博主',d:'炸机大叔/JUNFPV/QYFPV/Captain Vanover/MultiGP等',lk:null,lt:null,mt:null,ml:null}
 ];
 
@@ -430,37 +392,7 @@ document.getElementById('filters').addEventListener('click',function(e){
     });
 });
 
-function renderUpdateReport() {
-    const area = document.getElementById('update-report-area');
-    if (!UPDATE_REPORT || UPDATE_REPORT.count === 0) {
-        area.innerHTML = '';
-        return;
-    }
-    const r = UPDATE_REPORT;
-    let itemsHtml = '';
-    if (r.items && r.items.length > 0) {
-        itemsHtml = '<ul class="update-list">' +
-            r.items.map(it =>
-                `<li><span class="ul-who">${it.who}</span>${it.title} <span class="plat ${pc[it.platform]||''}" style="font-size:.6rem;padding:.1rem .3rem;border-radius:3px;vertical-align:middle;margin-left:.3rem">${pn[it.platform]||it.platform}</span></li>`
-            ).join('') +
-            '</ul>';
-    }
-    area.innerHTML = `
-    <div class="update-report">
-        <div class="update-report-header">
-            <h3>🔔 最新更新</h3>
-            <span class="update-date">${r.date}</span>
-        </div>
-        <div class="update-report-body">
-            <div class="update-summary">本次更新新增 <b style="color:#fff;font-size:1.1em">${r.count}</b> 个竞速视频</div>
-            ${itemsHtml}
-            ${r.note ? `<div class="update-detail">${r.note}</div>` : ''}
-        </div>
-    </div>`;
-}
-
 render();
-renderUpdateReport();
 </script>
 </body>
 </html>
